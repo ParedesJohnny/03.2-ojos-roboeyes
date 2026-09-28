@@ -18,6 +18,7 @@ inline void initI2C() {
     /* ESCRIBE TU CÓDIGO AQUÍ */
     Wire.begin(I2C_SDA_PIN, I2C_SCL_PIN);
     Wire.setClock(I2C_FREQUENCY_HZ);
+    Serial.println("[I2C] bus listo SDA=21 SCL=22");
 }
 
 // TODO 1.2: Barre el rango completo de direcciones e informa cada dispositivo hallado y el conteo final.
@@ -27,6 +28,7 @@ inline void scanI2C() {
     /* ESCRIBE TU CÓDIGO AQUÍ */
     byte error, direccion;
     int cont = 0;
+    Serial.println("[I2C] escaneando direcciones 1-126");
     for (direccion = 1; direccion < 127; direccion++) {
         Wire.beginTransmission(direccion);
         error = Wire.endTransmission();
@@ -49,7 +51,7 @@ inline void testI2CDevice() {
     Wire.beginTransmission(OLED_I2C_ADDR);
     byte error = Wire.endTransmission();
     if (error == 0) {
-        Serial.println("[POST] OLED responde en 0x");
+        Serial.print("[POST] OLED responde en 0x");
         if (OLED_I2C_ADDR < 16) Serial.print("0");
         Serial.println(OLED_I2C_ADDR, HEX);
     } else {
